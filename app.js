@@ -71,13 +71,28 @@ npm
     - package-lock.json
     - Create and Publish NPM Package, install it, update it --> npm login | npm deploy 
     - npm unpublish taxcalculator-v1 --force
-    
+
+GIT
+    - GitHub
+    - Add origin
+    - git branch -M session1 
+    - git branch
+    - git rm -rf node_modules
+    - add .gitignore
+
+Event Emmitter and Subscriber
+    - Simple Event Emmiter and Subscriber
+    - Try to call from different module, it won't work
+    - Solution
 */
 
 const myhelper = require("./Help");
 const path = require("path");
 const os = require("os");
 const fs = require("fs");
+const event = require("events");
+const { EventEmitter } = require("stream");
+const EventHelper = require("./eventhelper");
 
 var myname = "MAYUR PATIL";
 //console.log("WELCOME TO NODE JS");
@@ -105,9 +120,36 @@ console.log(os.version());
 //fs.readdir(__dirname, function (err, list) {
 fs.readdir(__dirname, function (err, list) {
   if (err) console.log(err);
-  console.log(list);
+  //  console.log(list);
 });
 
-console.log("CUSTOM PACKAGE:");
-const math = require("taxcalculator-v1");
-console.log(math.calculate(100, 18, "INR"));
+//console.log("CUSTOM PACKAGE:");
+//const math = require("taxcalculator-v1");
+//console.log(math.calculate(100, 18, "INR"));
+
+console.log("Emitting Event");
+const emmitter = new EventEmitter();
+
+emmitter.on("PUBLISH_MYNAME", function () {
+  console.log("Name is Published");
+});
+
+emmitter.on("PUBLISH_MYNAME", (args) => {
+  console.log("ARROR FUNCTION - " + args.name);
+});
+
+emmitter.on("help", (args) => {
+  console.log("HELP ASKED");
+});
+
+emmitter.emit("PUBLISH_MYNAME", { name: "Mayur", last: "Patil" });
+
+myhelper.showhelp("EVENT  PAGE");
+
+console.log("GLOBAL EVENT Starting");
+const eventobj = new EventHelper();
+eventobj.on("HELPASKED", (args) => {
+  console.log("SUBSCRIBED HELP->" + args.type);
+});
+
+eventobj.getHelp("DASHBOARD");
