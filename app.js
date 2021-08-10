@@ -69,7 +69,7 @@ npm
     - npm un -g <package name>
     - npm cache clean | npm cache clean --force | npm cache verify
     - package-lock.json
-    - Create and Publish NPM Package, install it, update it --> npm login | npm deploy 
+    - Create and Publish NPM Package, install it, update it --> npm login | npm publish 
     - npm unpublish taxcalculator-v1 --force
 
 GIT
@@ -84,7 +84,37 @@ Event Emmitter and Subscriber
     - Simple Event Emmiter and Subscriber
     - Try to call from different module, it won't work
     - Solution
+
+Promise
+
+Environment
+  process.env.PORT
+  export PORT:5000
+
+Async Await
+
+HTTP Server
+    Input GET, POST, Delete, Put, Validation, Basic HTML File
+
+Express Server
+    Input GET, POST, HTML, Body-Parser, Validations
+    app.use(bodyParser.urlencoded({ extended: true }))
+
+    */
+
+/*
+git add .
+git commit -m "I have created abc new features so far"
+git pull --> Fetch all the latest files from the server and do 2 things
+    - download and try to merge with your local commit files
+    - if auto merge succeeed good, or it fail with a conflict
+git push --> ERROR - YOu have latest version on the repository than your local instance
+
+
+
 */
+
+var myname = "Nitin Patil";
 
 const myhelper = require("./Help");
 const path = require("path");
@@ -93,6 +123,7 @@ const fs = require("fs");
 const event = require("events");
 const { EventEmitter } = require("stream");
 const EventHelper = require("./eventhelper");
+const { VERSION } = require("underscore");
 
 var myname = "MAYUR PATIL";
 //console.log("WELCOME TO NODE JS");
@@ -153,3 +184,35 @@ eventobj.on("HELPASKED", (args) => {
 });
 
 eventobj.getHelp("DASHBOARD");
+
+console.log("=====================");
+console.log("ASYNC AWAIT EXAMPLE");
+
+function request(url) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log("Request succeeded");
+      //      reject(`Network error when trying to reach ${url}`);
+    }, 2000);
+  });
+}
+
+request("www.red.com");
+console.log("This is last exe");
+
+async function asyncrequest(url) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log("Request succeeded from async");
+      //      reject(`Network error when trying to reach ${url}`);
+    }, 2000);
+  });
+}
+
+async function callweb() {
+  return await asyncrequest("sdf");
+  //  console.log("CALL WEB");
+}
+
+callweb();
+console.log("IN THE LASTs");
